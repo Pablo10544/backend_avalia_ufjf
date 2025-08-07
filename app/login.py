@@ -30,3 +30,6 @@ class Login:
         usuario = schema.Usuario(email,senha,tipo)
         usuario.salvar()
         return jsonify({'mensagem':'Sucesso'})
+    @staticmethod
+    def paginaPadrao():
+        return jsonify({'mensagem':'Sucesso'})
