@@ -1,4 +1,4 @@
-import app
+from app import db, create_app
 from app.models import schema
 from flask import request, jsonify
 
@@ -17,6 +17,14 @@ class Admin():
         pedido = schema.SolicitacoesAdm.query.filter_by(id=id_pedido).first()
         pedido.status = 2
         pedido.salvar()
+        return jsonify({'mensagem':'Sucesso'})
+    @staticmethod
+    def delete_review():
+        app = create_app()
+
+        with app.app_context():
+            db.session.query(schema.Avaliacao).delete()
+            db.session.commit()
         return jsonify({'mensagem':'Sucesso'})
 
         #pedente aprovado reprovado
