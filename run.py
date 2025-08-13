@@ -17,6 +17,7 @@ app.add_url_rule('/foto-professor',view_func=professores.Professores.foto,method
 app.add_url_rule('/buscar-avaliacoes',view_func=avaliacao.Avaliacao.BuscarAvaliacoesProfesores,methods=['GET'])
 app.add_url_rule('/',view_func=login.Login.paginaPadrao,methods=['GET'])
 app.add_url_rule('/delete_review',view_func=admin.Admin.delete_review,methods=['GET'])
+app.add_url_rule('/delete_nao_tive_aula',view_func=admin.Admin.delete_nao_tive_aula,methods=['GET'])
 app.add_url_rule('/buscar-id-avaliacao',view_func=avaliacao.Avaliacao.GetComentarioId,methods=['GET'])
 
 if __name__ == "__main__":
