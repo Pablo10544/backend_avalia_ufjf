@@ -5,7 +5,7 @@ from flask import request, jsonify
 class Admin():
     @staticmethod
     def deletar_comentario():
-        avaliacao_id = request.form.get('avaliacao_id')
+        avaliacao_id = request.args.get('avaliacao_id')
         avaliacao = schema.Avaliacao.query.filter_by(id=avaliacao_id).first()
         if avaliacao:
             avaliacao.comentario=None
