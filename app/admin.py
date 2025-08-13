@@ -27,5 +27,14 @@ class Admin():
             db.session.query(schema.Avaliacao).delete()
             db.session.commit()
         return jsonify({'mensagem':'Sucesso'})
+    @staticmethod
+    def delete_nao_tive_aula():
+        app = create_app()
+
+        with app.app_context():
+            db.session.query(schema.Docentesemvinculo).delete()
+            db.session.commit()
+        return jsonify({'mensagem':'Sucesso'})
+
 
         #pedente aprovado reprovado
