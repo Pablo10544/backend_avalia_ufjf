@@ -71,6 +71,16 @@ class Avaliacao:
         medianota2 = int(notas2)/tamanho
         medianota3 = int(notas3)/tamanho
         return medianota1,medianota2,medianota3,comentarios,total,quantidade_nota_5,quantidade_nota_4,quantidade_nota_3,quantidade_nota_2,quantidade_nota_1
+    @staticmethod
+    def GetComentarioId():
+            professor_id = request.args.get('professor_id')
+            comentario = request.args.get('comentario')
+            avaliacao = schema.Avaliacao.query.filter_by(professor_id=professor_id,comentario=comentario).first()
+            if avaliacao:
+                return jsonify({"id":avaliacao.id})
+            return jsonify({"id":-1})
+
+
 
 
 
