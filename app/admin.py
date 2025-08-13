@@ -10,7 +10,8 @@ class Admin():
         if avaliacao:
             avaliacao.comentario=None
             avaliacao.salvar()
-        return jsonify({'mensagem':'Sucesso'})
+            return jsonify({'mensagem':'Sucesso'})
+        return jsonify({'mensagem':'erro'})
     @staticmethod
     def aprovar_adm():
         id_pedido = request.form.get('id_pedido')
