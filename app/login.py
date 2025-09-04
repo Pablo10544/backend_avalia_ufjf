@@ -42,10 +42,7 @@ class Login:
         return jsonify({'mensagem':'Sucesso'})
     @staticmethod
     def returnSecretKey():
-        lista = []
-        for chave, valor in settings.SECRET_KEY.items():
-            lista.append(f"{chave}: {valor}")
-        return jsonify({'secret_key':lista})
+        return jsonify({'secret_key':settings.SECRET_KEY})
     @staticmethod
     def paginaPadrao():
         return jsonify({'mensagem':'Sucesso'})
