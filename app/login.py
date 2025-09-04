@@ -1,6 +1,11 @@
+from datetime import datetime, timedelta
+from functools import wraps
+from time import timezone
+import jwt
 import app
+from app import settings
 from app.models import schema
-from flask import request, jsonify
+from flask import make_response, request, jsonify
 
 class Login:
     @staticmethod
@@ -11,7 +16,12 @@ class Login:
         if usuario:
             print("Encontrado")
             if usuario.check_senha(senha):
-                return jsonify({'mensagem':'Sucesso'})
+                token = jwt.encode({'public_id': usuario.id, 'exp': datetime.now() + timedelta(hours=4)},
+                settings.SECRET_KEY, algorithm="HS256")
+                response = make_response(jsonify({'mensagem':'Sucesso','token':token}))
+                response.set_cookie('jwt_token',token)
+                return response
+                 
             return jsonify({'mensagem':'erro'})
         else:
             print("Usuário não encontrado")
@@ -31,5 +41,25 @@ class Login:
         usuario.salvar()
         return jsonify({'mensagem':'Sucesso'})
     @staticmethod
+    def returnSecretKey():
+        return jsonify({'secret_key':settings.SECRET_KEY})
+    @staticmethod
     def paginaPadrao():
         return jsonify({'mensagem':'Sucesso'})
+
+def token_required(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            token = request.cookies.get('jwt_token')
+
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 401
+
+            try:
+                data = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            except:
+                return jsonify({'message': 'Token is invalid!'}), 401
+
+            return f( *args, **kwargs)
+
+        return decorated

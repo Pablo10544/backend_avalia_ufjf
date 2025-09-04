@@ -1,7 +1,9 @@
 from flask import abort, jsonify, request
+from app.login import token_required
 from app.models import schema
 class Avaliacao:
     @staticmethod
+    @token_required
     def Avaliar():
         valormaximo=5
         nota1=Avaliacao.min_value(request.form.get('nota1'),valormaximo)
@@ -21,6 +23,7 @@ class Avaliacao:
         minimo= min(abs(int(value)),abs(int(min_val)))
         return minimo
     @staticmethod
+    @token_required
     def BuscarAvaliacaoGeralProfessor():
         professor_id = request.args.get('professor_id')
         if not professor_id:
@@ -29,6 +32,7 @@ class Avaliacao:
         return jsonify({'id':int(professor_id),"NotaDidatica":medianota1,'quantidade_nota_5':quantidade_nota_5,'quantidade_nota_4':quantidade_nota_4,'quantidade_nota_3':quantidade_nota_3,'quantidade_nota_2':quantidade_nota_2,'quantidade_nota_1':quantidade_nota_1,
                         "NotaDificuldadeProva":medianota2,"NotaPlanoEnisno":medianota3,'TotalAvaliacoes':total,"comentarios":comentarios})
     @staticmethod
+    @token_required
     def BuscarAvaliacoesProfesores():
         ids_param = request.args.get('ids')
         ids = [int(id_str) for id_str in ids_param.split(',') if id_str.strip().isdigit()]
@@ -36,6 +40,7 @@ class Avaliacao:
         lista = [prof.to_dict() for prof in professores]
         return jsonify({'lista':lista})
     @staticmethod
+    @token_required
     def pega_stats_avaliacao_professor(professor_id):
         avaliacoes_professor = schema.Avaliacao.query.filter_by(professor_id=professor_id).all()
         quantidade_nota_5 = sum(1 for a in avaliacoes_professor if a.nota1 == 5)
@@ -72,6 +77,7 @@ class Avaliacao:
         medianota3 = int(notas3)/tamanho
         return medianota1,medianota2,medianota3,comentarios,total,quantidade_nota_5,quantidade_nota_4,quantidade_nota_3,quantidade_nota_2,quantidade_nota_1
     @staticmethod
+    @token_required
     def GetComentarioId():
             professor_id = request.args.get('professor_id')
             comentario = request.args.get('comentario')

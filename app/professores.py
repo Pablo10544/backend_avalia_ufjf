@@ -1,9 +1,11 @@
 from flask import jsonify, request, send_from_directory, abort
 from app import settings
+from app.login import token_required
 from app.models import schema
 import os
 class Professores:
     @staticmethod
+    @token_required
     def listar_professores():
         professores = schema.Professor.query.all()
         lista_professores = []
@@ -11,6 +13,7 @@ class Professores:
             lista_professores.append({"id":int(item.id),"nome":item.nome})
         return jsonify(lista_professores) 
     @staticmethod
+    @token_required
     def list_professores_por_nome():
         professor_nome = request.args.get('professor_nome')
         professores = schema.Professor.query.filter(schema.Professor.nome.ilike('%'+professor_nome+'%')).all()
@@ -19,6 +22,7 @@ class Professores:
             nomes.append(nome.nome)
         return jsonify({"professores":nomes})    
     @staticmethod
+    @token_required
     def rejeitar_professor():
         professor_id = request.form.get('professor_id')
         aluno_id = request.form.get('aluno_id')
@@ -28,6 +32,7 @@ class Professores:
         docente_sem_vinculo.salvar()
         return jsonify({'mensagem':'Sucesso'})
     @staticmethod
+    @token_required
     def buscar_cards_professor():
         aluno_id = request.args.get('aluno_id')
         curso = request.args.get('curso')
@@ -47,6 +52,7 @@ class Professores:
 ]
         return jsonify(professores_json)
     @staticmethod
+    @token_required
     def foto():
         professor_id = request.args.get('professor_id')
         caminho_imagem = os.path.join(settings.MEDIA_ROOT)

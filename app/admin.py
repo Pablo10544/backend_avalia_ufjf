@@ -1,9 +1,11 @@
 from app import db, create_app
+from app.login import token_required
 from app.models import schema
 from flask import request, jsonify
 
 class Admin():
     @staticmethod
+    @token_required
     def deletar_comentario():
         avaliacao_id = request.args.get('avaliacao_id')
         avaliacao = schema.Avaliacao.query.filter_by(id=avaliacao_id).first()
@@ -13,6 +15,7 @@ class Admin():
             return jsonify({'mensagem':'Sucesso'})
         return jsonify({'mensagem':'erro'})
     @staticmethod
+    @token_required
     def aprovar_adm():
         id_pedido = request.form.get('id_pedido')
         pedido = schema.SolicitacoesAdm.query.filter_by(id=id_pedido).first()
@@ -20,6 +23,7 @@ class Admin():
         pedido.salvar()
         return jsonify({'mensagem':'Sucesso'})
     @staticmethod
+    @token_required
     def delete_review():
         app = create_app()
 
@@ -28,6 +32,7 @@ class Admin():
             db.session.commit()
         return jsonify({'mensagem':'Sucesso'})
     @staticmethod
+    @token_required
     def delete_nao_tive_aula():
         app = create_app()
 
