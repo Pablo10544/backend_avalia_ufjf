@@ -24,8 +24,8 @@ def create_routes(app):
 
     app.add_url_rule('/deletar-comentario', view_func=AdminController.deletar_comentario, methods=['DELETE'])
     app.add_url_rule('/aprovar-adm', view_func=AdminController.aprovar_admin, methods=['POST'])
-    #app.add_url_rule('/delete_review', view_func=AdminController.delete_review, methods=['GET'])
-    #app.add_url_rule('/delete_nao_tive_aula', view_func=AdminController.delete_nao_tive_aula, methods=['GET'])
+    app.add_url_rule('/delete_review', view_func=AdminController.deletar_todas_avaliacoes, methods=['GET'])
+    app.add_url_rule('/delete_nao_tive_aula', view_func=AdminController.deletar_docentes_sem_vinculo, methods=['GET'])
 
     app.add_url_rule('/', view_func=LoginController.pagina_padrao, methods=['GET'])
     #app.add_url_rule('/secret-key', view_func=LoginController.return_secret_key, methods=['GET'])
