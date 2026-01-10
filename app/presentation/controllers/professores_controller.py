@@ -1,4 +1,4 @@
-from app.logger.logger import log
+from app.infrastructure.logger.logger import log
 from flask import request, jsonify, abort, send_from_directory
 from app.infrastructure.security.auth_decorators import token_required
 from app.application.services.professores_service import ProfessoresService

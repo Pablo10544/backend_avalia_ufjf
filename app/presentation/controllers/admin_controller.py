@@ -1,5 +1,5 @@
 from flask import request, jsonify, abort
-from app.logger.logger import log
+from app.infrastructure.logger.logger import log
 from app.infrastructure.security.auth_decorators import token_required
 from app.application.services.admin_service import AdminService
 

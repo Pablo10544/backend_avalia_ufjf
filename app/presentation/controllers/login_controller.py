@@ -1,4 +1,4 @@
-from app.logger.logger import log
+from app.infrastructure.logger.logger import log
 from flask import request, jsonify, make_response, abort
 from app.application.services.auth_service import AuthService
 
