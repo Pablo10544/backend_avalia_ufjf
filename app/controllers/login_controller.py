@@ -1,3 +1,4 @@
+from app.logger.logger import log
 from flask import request, jsonify, make_response, abort
 from app.services.auth_service import AuthService
 
@@ -5,11 +6,13 @@ class LoginController:
 
     @staticmethod
     def autenticar():
+        log.info("Requisição de autenticar iniciada.")
         email = request.form.get("email")
         senha = request.form.get("senha")
 
         try:
             token = AuthService.autenticar(email, senha)
+            log.info("Requisição de autenticar executada com sucesso.")
             response = make_response(jsonify({
                 "mensagem": "Sucesso",
                 "token": token
@@ -21,11 +24,14 @@ class LoginController:
 
     @staticmethod
     def criar_usuario():
+        log.info("Requisição de criar usuario iniciada.")
         email = request.form.get("email")
         senha = request.form.get("senha")
 
         try:
             AuthService.criar_usuario(email, senha)
+            log.info("Requisição de criar usuario executada com sucesso.")
+
             return jsonify({"mensagem": "Sucesso"})
         except ValueError as e:
             abort(400, str(e))
@@ -36,4 +42,5 @@ class LoginController:
 
     @staticmethod
     def pagina_padrao():
+        log.info("Requisição de criar usuario executada com sucesso.")
         return jsonify({"mensagem": "Sucesso"})
