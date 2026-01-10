@@ -8,6 +8,37 @@ class AvaliacaoController:
     @staticmethod
     @token_required
     def criar_avaliacao():
+        """
+Cria uma nova avaliação
+---
+tags:
+  - Avaliações
+security:
+  - JwtCookieAuth: []
+  - BearerAuth: []
+consumes:
+  - application/x-www-form-urlencoded
+parameters:
+  - name: body
+    in: formData
+    type: string
+    required: true
+    description: "Dados da avaliação enviados via form-data"
+responses:
+  200:
+    description: Avaliação criada com sucesso
+    schema:
+      type: object
+      properties:
+        mensagem:
+          type: string
+          example: "Sucesso"
+  400:
+    description: Erro de validação nos dados enviados
+  401:
+    description: Token ausente ou inválido
+"""
+
         log.info("Requisição de criar avaliacao iniciada.")
 
         data = request.form
@@ -22,6 +53,38 @@ class AvaliacaoController:
     @staticmethod
     @token_required
     def buscar_estatisticas_professor():
+        """
+Busca estatísticas de avaliações de um professor
+---
+tags:
+  - Avaliações
+security:
+  - JwtCookieAuth: []
+  - BearerAuth: []
+parameters:
+  - name: professor_id
+    in: query
+    type: integer
+    required: true
+    description: "ID do professor"
+responses:
+  200:
+    description: Estatísticas do professor retornadas com sucesso
+    schema:
+      type: object
+      properties:
+        media:
+          type: number
+          example: 4.5
+        total_avaliacoes:
+          type: integer
+          example: 12
+  400:
+    description: Professor inválido
+  401:
+    description: Token ausente ou inválido
+"""
+
         log.info("Requisição de listar estatisticas professor iniciada.")
         professor_id = request.args.get("professor_id")
         if not professor_id:
@@ -35,6 +98,31 @@ class AvaliacaoController:
     @staticmethod
     @token_required
     def listar_avaliacoes_professores():
+        """
+Lista avaliações dos professores
+---
+tags:
+  - Avaliações
+security:
+  - JwtCookieAuth: []
+  - BearerAuth: []
+parameters:
+  - name: ids
+    in: query
+    type: string
+    required: true
+    description: "Lista de IDs de professores separados por vírgula (ex: 1,2,3)"
+responses:
+  200:
+    description: Lista de avaliações retornada com sucesso
+  400:
+    description: Parâmetro ids ausente ou inválido
+  401:
+    description: Token ausente ou inválido
+"""
+
+
+
         log.info("Requisição de listar avaliacoes iniciada.")
         ids_param = request.args.get("ids")
         if not ids_param:
@@ -51,6 +139,32 @@ class AvaliacaoController:
     @staticmethod
     @token_required
     def get_comentario_id():
+        """
+Lista comentários de um professor
+---
+tags:
+  - Avaliações
+security:
+  - JwtCookieAuth: []
+  - BearerAuth: []
+parameters:
+  - name: professor_id
+    in: query
+    type: integer
+    required: true
+    description: "ID do professor"
+  - name: comentario
+    in: query
+    type: string
+    required: false
+    description: "Filtro opcional de comentário"
+responses:
+  200:
+    description: Lista de comentários retornada com sucesso
+  401:
+    description: Token ausente ou inválido
+"""
+
         log.info("Requisição de listar comentários iniciada.")
         professor_id = request.args.get("professor_id")
         comentario = request.args.get("comentario")

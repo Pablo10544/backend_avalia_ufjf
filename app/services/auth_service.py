@@ -13,7 +13,7 @@ class AuthService:
             raise ValueError("Credenciais inválidas")
 
         usuario = UsuarioRepository.buscar_por_email(email)
-        if not usuario or not usuario.check_senha(senha):
+        if not usuario or not usuario.validar_senha(senha):
             raise ValueError("Usuário ou senha inválidos")
 
         payload = {

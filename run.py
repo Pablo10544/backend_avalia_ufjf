@@ -1,4 +1,5 @@
 from flask_cors import CORS
+from flasgger import Swagger
 from app import create_app
 
 # Controllers
@@ -34,6 +35,38 @@ def main():
     app = create_app()
     CORS(app)
     create_routes(app)
+    swagger_template = {
+    "swagger": "2.0",
+    "info": {
+        "title": "Backend Avalia UFJF",
+        "description": "API de avaliações da UFJF",
+        "version": "1.0.0"
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Header Authorization (não obrigatório se cookie estiver presente)"
+        }
+    }
+}
+
+    swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": "swagger",
+            "route": "/swagger.json",
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/swagger"
+}
+    Swagger(app,config=swagger_config,template=swagger_template)  
     app.run(host='0.0.0.0', debug=True)
 
 if __name__ == "__main__":

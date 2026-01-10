@@ -7,7 +7,8 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.cookies.get("jwt_token")
-
+        if not token:
+            token =request.headers.get("Authorization")
         if not token:
             return jsonify({"message": "Token ausente"}), 401
 
