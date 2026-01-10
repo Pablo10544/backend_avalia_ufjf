@@ -14,8 +14,8 @@ class AvaliacaoService:
         professor_id = data.get("professor_id")
         disciplina_id = data.get("disciplina_id")
         comentario = data.get("comentario")
-
-        if not all([nota1, nota2, nota3, aluno_id, professor_id, disciplina_id]):
+        
+        if not all([nota1, nota2, nota3, aluno_id, professor_id, disciplina_id]) or any([nota1==0,nota2==0,nota3==0]):
             raise ValueError("Campos obrigatórios ausentes")
 
         AvaliacaoRepository.salvar(
@@ -26,8 +26,10 @@ class AvaliacaoService:
 
     @staticmethod
     def limitar_nota(valor):
-        valor = int(valor)
-        return min(abs(valor), AvaliacaoService.VALOR_MAXIMO)
+        if valor:
+            valor = int(valor)
+            return min(abs(valor), AvaliacaoService.VALOR_MAXIMO)
+        return 0
 
     @staticmethod
     def buscar_estatisticas_professor(professor_id):
