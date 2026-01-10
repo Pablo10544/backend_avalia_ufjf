@@ -1,4 +1,4 @@
-from app.models.schema import Usuario
+from app.domain.models.schema import Usuario
 
 class UsuarioRepository:
 

@@ -1,6 +1,6 @@
 import jwt
 from datetime import datetime, timedelta
-from app import settings
+from app.infrastructure import settings
 from app.infrastructure.repositories.usuario_repository import UsuarioRepository
 
 class AuthService:

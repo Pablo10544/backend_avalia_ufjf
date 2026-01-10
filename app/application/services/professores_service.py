@@ -1,5 +1,5 @@
 import os
-from app import settings
+from app.infrastructure import settings
 from app.infrastructure.repositories.professores_repository import ProfessoresRepository
 from app.infrastructure.repositories.docentes_sem_vinculo_repository import DocenteSemVinculoRepository
 

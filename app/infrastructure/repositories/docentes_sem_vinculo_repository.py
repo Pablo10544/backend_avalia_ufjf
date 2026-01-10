@@ -1,4 +1,4 @@
-from app.models.schema import DocenteSemVinculo
+from app.domain.models.schema import DocenteSemVinculo
 
 class DocenteSemVinculoRepository:
 

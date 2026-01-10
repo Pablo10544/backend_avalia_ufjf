@@ -1,5 +1,5 @@
 from app import db
-from app.models import schema
+from app.domain.models import schema
 
 class AdminRepository:
 

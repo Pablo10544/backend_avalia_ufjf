@@ -1,4 +1,4 @@
-from app.models.schema import Avaliacao
+from app.domain.models.schema import Avaliacao
 
 class AvaliacaoRepository:
 

@@ -1,4 +1,4 @@
-from app.models.schema import Professor
+from app.domain.models.schema import Professor
 
 class ProfessoresRepository:
 
