@@ -3,10 +3,10 @@ from flasgger import Swagger
 from app import create_app
 
 # Controllers
-from app.controllers.login_controller import LoginController
-from app.controllers.avaliacao_controller import AvaliacaoController
-from app.controllers.professores_controller import ProfessoresController
-from app.controllers.admin_controller import AdminController
+from app.presentation.controllers.login_controller import LoginController
+from app.presentation.controllers.avaliacao_controller import AvaliacaoController
+from app.presentation.controllers.professores_controller import ProfessoresController
+from app.presentation.controllers.admin_controller import AdminController
 
 def create_routes(app):
     app.add_url_rule('/login', view_func=LoginController.autenticar, methods=['POST'])

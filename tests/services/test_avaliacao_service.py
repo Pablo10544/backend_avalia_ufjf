@@ -1,5 +1,5 @@
 import pytest
-from app.services.avaliacao_service import AvaliacaoService
+from app.application.services.avaliacao_service import AvaliacaoService
 
 class AvaliacaoFake:
     def __init__(self, nota1=5, nota2=5, nota3=5, comentario=None, id=1):
@@ -27,7 +27,7 @@ def test_limitar_nota_negativa():
     assert AvaliacaoService.limitar_nota(-4) == 4
 def test_criar_avaliacao_sucesso(mocker):
     mock_salvar = mocker.patch(
-        "app.services.avaliacao_service.AvaliacaoRepository.salvar"
+        "app.application.services.avaliacao_service.AvaliacaoRepository.salvar"
     )
 
     data = {
@@ -65,7 +65,7 @@ def test_buscar_estatisticas_professor(mocker):
     ]
 
     mocker.patch(
-        "app.services.avaliacao_service.AvaliacaoRepository.buscar_por_professor",
+        "app.application.services.avaliacao_service.AvaliacaoRepository.buscar_por_professor",
         return_value=avaliacoes
     )
 
@@ -82,7 +82,7 @@ def test_listar_avaliacoes_professores(mocker):
     avaliacoes = [AvaliacaoFake(), AvaliacaoFake()]
 
     mocker.patch(
-        "app.services.avaliacao_service.AvaliacaoRepository.buscar_por_professores",
+        "app.application.services.avaliacao_service.AvaliacaoRepository.buscar_por_professores",
         return_value=avaliacoes
     )
 
@@ -92,7 +92,7 @@ def test_listar_avaliacoes_professores(mocker):
     
 def test_get_comentario_id_encontrado(mocker):
     mocker.patch(
-        "app.services.avaliacao_service.AvaliacaoRepository.buscar_comentario",
+        "app.application.services.avaliacao_service.AvaliacaoRepository.buscar_comentario",
         return_value=AvaliacaoFake(id=99)
     )
 
@@ -102,7 +102,7 @@ def test_get_comentario_id_encontrado(mocker):
 
 def test_get_comentario_id_nao_encontrado(mocker):
     mocker.patch(
-        "app.services.avaliacao_service.AvaliacaoRepository.buscar_comentario",
+        "app.application.services.avaliacao_service.AvaliacaoRepository.buscar_comentario",
         return_value=None
     )
 

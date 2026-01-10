@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime, timedelta
 
-from app.services.auth_service import AuthService
+from app.application.services.auth_service import AuthService
 class UsuarioFake:
     def __init__(self, id=1, senha_valida=True):
         self.id = id
@@ -25,7 +25,7 @@ def test_autenticar_senha_invalida(mocker):
     usuario = UsuarioFake(senha_valida=False)
 
     mocker.patch(
-        "app.services.auth_service.UsuarioRepository.buscar_por_email",
+        "app.application.services.auth_service.UsuarioRepository.buscar_por_email",
         return_value=usuario
     )
 
@@ -35,12 +35,12 @@ def test_autenticar_sucesso(mocker):
     usuario = UsuarioFake(id=42)
 
     mocker.patch(
-        "app.services.auth_service.UsuarioRepository.buscar_por_email",
+        "app.application.services.auth_service.UsuarioRepository.buscar_por_email",
         return_value=usuario
     )
 
     mock_jwt_encode = mocker.patch(
-        "app.services.auth_service.jwt.encode",
+        "app.application.services.auth_service.jwt.encode",
         return_value="token-fake"
     )
 
@@ -62,7 +62,7 @@ def test_criar_usuario_dados_ausentes():
         AuthService.criar_usuario("email@test.com", None)
 def test_criar_usuario_ja_existe(mocker):
     mocker.patch(
-        "app.services.auth_service.UsuarioRepository.buscar_por_email",
+        "app.application.services.auth_service.UsuarioRepository.buscar_por_email",
         return_value=object()
     )
 
@@ -70,12 +70,12 @@ def test_criar_usuario_ja_existe(mocker):
         AuthService.criar_usuario("email@test.com", "123")
 def test_criar_usuario_sucesso(mocker):
     mocker.patch(
-        "app.services.auth_service.UsuarioRepository.buscar_por_email",
+        "app.application.services.auth_service.UsuarioRepository.buscar_por_email",
         return_value=None
     )
 
     mock_criar = mocker.patch(
-        "app.services.auth_service.UsuarioRepository.criar"
+        "app.application.services.auth_service.UsuarioRepository.criar"
     )
 
     AuthService.criar_usuario("email@test.com", "123")

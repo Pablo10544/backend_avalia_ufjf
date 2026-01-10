@@ -1,5 +1,5 @@
 import pytest
-from app.services.professores_service import ProfessoresService
+from app.application.services.professores_service import ProfessoresService
 class DisciplinaFake:
     def __init__(self, nome):
         self.nome = nome
@@ -17,7 +17,7 @@ def test_listar_professores(mocker):
     ]
 
     mocker.patch(
-        "app.services.professores_service.ProfessoresRepository.listar_todos",
+        "app.application.services.professores_service.ProfessoresRepository.listar_todos",
         return_value=professores
     )
 
@@ -34,7 +34,7 @@ def test_listar_por_nome(mocker):
     ]
 
     mocker.patch(
-        "app.services.professores_service.ProfessoresRepository.buscar_por_nome",
+        "app.application.services.professores_service.ProfessoresRepository.buscar_por_nome",
         return_value=professores
     )
 
@@ -51,7 +51,7 @@ def test_rejeitar_professor_dados_invalidos():
         ProfessoresService.rejeitar_professor(1, None)
 def test_rejeitar_professor_sucesso(mocker):
     mock_salvar = mocker.patch(
-        "app.services.professores_service.DocenteSemVinculoRepository.salvar"
+        "app.application.services.professores_service.DocenteSemVinculoRepository.salvar"
     )
 
     ProfessoresService.rejeitar_professor(10, 20)
@@ -78,12 +78,12 @@ def test_buscar_cards_filtra_professores_rejeitados(mocker):
     ]
 
     mocker.patch(
-        "app.services.professores_service.ProfessoresRepository.buscar_por_curso",
+        "app.application.services.professores_service.ProfessoresRepository.buscar_por_curso",
         return_value=professores
     )
 
     mocker.patch(
-        "app.services.professores_service.DocenteSemVinculoRepository.buscar_ids_rejeitados",
+        "app.application.services.professores_service.DocenteSemVinculoRepository.buscar_ids_rejeitados",
         return_value=[2]
     )
 
@@ -98,12 +98,12 @@ def test_buscar_cards_filtra_professores_rejeitados(mocker):
     ]
 def test_buscar_foto_inexistente(mocker):
     mocker.patch(
-        "app.services.professores_service.settings.MEDIA_ROOT",
+        "app.application.services.professores_service.settings.MEDIA_ROOT",
         "/fake/path"
     )
 
     mocker.patch(
-        "app.services.professores_service.os.path.exists",
+        "app.application.services.professores_service.os.path.exists",
         return_value=False
     )
 
@@ -111,12 +111,12 @@ def test_buscar_foto_inexistente(mocker):
         ProfessoresService.buscar_foto(10)
 def test_buscar_foto_sucesso(mocker):
     mocker.patch(
-        "app.services.professores_service.settings.MEDIA_ROOT",
+        "app.application.services.professores_service.settings.MEDIA_ROOT",
         "/fake/path"
     )
 
     mocker.patch(
-        "app.services.professores_service.os.path.exists",
+        "app.application.services.professores_service.os.path.exists",
         return_value=True
     )
 
