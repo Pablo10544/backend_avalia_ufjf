@@ -10,7 +10,8 @@ class AdminRepository:
     @staticmethod
     def remover_comentario(avaliacao):
         avaliacao.comentario = None
-        avaliacao.salvar()
+        db.session.add(avaliacao)
+        db.session.commit()
 
     @staticmethod
     def buscar_pedido_admin(id_pedido):
@@ -19,7 +20,8 @@ class AdminRepository:
     @staticmethod
     def aprovar_pedido(pedido):
         pedido.status = 2
-        pedido.salvar()
+        db.session.add(pedido)
+        db.session.commit()
 
     @staticmethod
     def deletar_todas_avaliacoes():

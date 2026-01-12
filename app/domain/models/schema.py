@@ -84,7 +84,7 @@ class DisciplinaProfessor(db.Model):
     professor = db.relationship("Professor", back_populates="disciplinas")
     disciplina = db.relationship("Disciplina", back_populates="professores")
 class DocenteSemVinculo(db.Model):
-    __tablename__ = "docentes_sem_vinculo"
+    __tablename__ = "docentesemvinculo"
 
     id = db.Column(db.Integer, primary_key=True)
     aluno_id = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=False)

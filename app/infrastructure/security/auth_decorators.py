@@ -8,7 +8,7 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = request.cookies.get("jwt_token")
         if not token:
-            token =request.headers.get("Authorization")
+            token =request.headers.get("Authorization").replace("Bearer ","")
         if not token:
             return jsonify({"message": "Token ausente"}), 401
 

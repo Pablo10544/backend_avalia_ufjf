@@ -1,11 +1,13 @@
 from app.domain.models.schema import DocenteSemVinculo
+from app import db
 
 class DocenteSemVinculoRepository:
 
     @staticmethod
     def salvar(aluno_id, professor_id):
-        registro = DocenteSemVinculo(aluno_id, professor_id)
-        registro.salvar()
+        registro = DocenteSemVinculo(aluno_id=aluno_id, professor_id=professor_id)
+        db.session.add(registro)
+        db.session.commit()
 
     @staticmethod
     def buscar_ids_rejeitados(aluno_id):

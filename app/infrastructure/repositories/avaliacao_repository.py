@@ -1,4 +1,5 @@
 from app.domain.models.schema import Avaliacao
+from app import db
 
 class AvaliacaoRepository:
 
@@ -13,7 +14,9 @@ class AvaliacaoRepository:
             aluno_id=aluno_id,
             professor_id=professor_id
         )
-        avaliacao.salvar()
+        
+        db.session.add(avaliacao)
+        db.session.commit()
 
     @staticmethod
     def buscar_por_professor(professor_id):

@@ -139,7 +139,6 @@ responses:
         return jsonify(ProfessoresService.buscar_cards(aluno_id, curso))
 
     @staticmethod
-    @token_required
     def buscar_foto():
         """
 Busca a foto de um professor
